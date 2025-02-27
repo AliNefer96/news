@@ -1,0 +1,19 @@
+{
+    "newsTitle": "Novosti",
+    "newsCategory": "Kategorija",
+    "registerTitle": "Registruj se",
+    "firstName": "Ime",
+    "lastName": "Prezime",
+    "phoneNumber": "Telefon",
+    "email": "Email",
+    "password": "Password",
+    "birthdayLabel": "Rodendan (YYYY-MM-DD)",
+    "birthdayCard": "Posalji cestitk automatski",
+    "loginTitle": "Prijavi se",
+    "english": "Engleski",
+    "croatian": "Hrvatski",
+    "newsDetails": "Detalji",
+    "alreadyHaveAcc": "Vec imate profil? Prijavi se",
+    "dontHaveAcc": "Nisi registrovan? Registruj se",
+    "welcome": "Dobro Dosli"
+  }

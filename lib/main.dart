@@ -15,9 +15,9 @@ import 'package:news/network/news/news_api_serice.dart';
 import 'package:news/screens/auth/login/login_screen.dart';
 import 'package:news/screens/auth/register/register_screen.dart';
 import 'package:news/screens/home/home_screen.dart';
-import 'package:news/src/app_strings.dart';
 
 void main() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp();
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
@@ -28,45 +28,64 @@ void main() async {
 }
 
 
-class MyApp extends StatelessWidget {
-    final bool isLoggedIn;
-  MyApp({required this.isLoggedIn});
+class MyApp extends StatefulWidget {
+  final bool isLoggedIn;
+
+  const MyApp({super.key, required this.isLoggedIn});
+
+  @override
+  _MyAppState createState() => _MyAppState();
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    final _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state?.setLocale(newLocale);
+  }
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale _locale = Locale('en');
+
+  void setLocale(Locale newLocale) {
+    setState(() {
+      _locale = newLocale;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => RegisterBloc(RegisterApiService()),
-        child: RegisterScreen(),),
-        BlocProvider(create: (context) => LoginBloc(LoginApiService()),
-        child: LoginScreen(),
-        ),
-         BlocProvider<NewsBloc>(
-          create: (context) => NewsBloc(NewsApiService()),
-        ),
+        BlocProvider(create: (_) => RegisterBloc(RegisterApiService())),
+        BlocProvider(create: (_) => LoginBloc(LoginApiService())),
+        BlocProvider(create: (_) => NewsBloc(NewsApiService())),
+        
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: AppStrings.newsTitle,
-        theme: ThemeData(primarySwatch: Colors.blue),
-         supportedLocales: [
-        Locale('en', ''),  
-        Locale('hr', ''),  
-      ],
-      localizationsDelegates: [
-        AppLocalizations.delegate, 
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      localeResolutionCallback: (locale, supportedLocales) {
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale?.languageCode) {
-            return supportedLocale;
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        supportedLocales: const [
+          Locale('en', ''),
+          Locale('hr', ''),
+        ],
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        locale: _locale,
+        localeResolutionCallback: (locale, supportedLocales) {
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale?.languageCode) {
+              return supportedLocale;
+            }
           }
-        }
-        return supportedLocales.first;},
-        home: isLoggedIn ? HomeScreen() : LoginScreen(),
+          return supportedLocales.first;
+        },
+        home: widget.isLoggedIn ? HomeScreen() : LoginScreen(),
       ),
     );
   }

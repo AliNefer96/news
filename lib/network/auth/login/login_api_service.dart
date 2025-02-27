@@ -66,7 +66,7 @@ class LoginApiService {
     }
   }
 
-  Future<void> logout() async {
+  Future logout() async {
     await _storage.deleteAll();
   }
 }

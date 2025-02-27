@@ -39,4 +39,40 @@ class NewsApiService {
       throw Exception("Failed to load news: ${e.toString()}");
     }
   }
+  Future<NewsArticle> fetchNewsDetails(String newsId) async {
+  try {
+    String? token = await _storage.read(key: "jwt");
+
+    if (token == null) {
+      throw Exception("Unauthorized: No token found");
+    }
+
+    final response = await _dio.get(
+      "${AppEndpoints.newsDetailsUrl}$newsId",
+      options: Options(
+        headers: {
+          "Authorization": "Bearer $token",
+          "Content-Type": "application/json",
+        },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      return NewsArticle.fromJsonDetails(response.data["result"]);
+    }
+
+    throw Exception("Failed to load news details");
+  } catch (e) {
+    throw Exception("Error fetching news details: ${e.toString()}");
+  }
+}
+Future<bool> logout() async {
+    try {
+      await _storage.delete(key: 'access_token');
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
 }

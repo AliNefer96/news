@@ -24,3 +24,7 @@ class NewsError extends NewsState {
   final String message;
   NewsError(this.message);
 }
+class NewsDetailsLoaded extends NewsState {
+  final NewsArticle news;
+  NewsDetailsLoaded(this.news);
+}

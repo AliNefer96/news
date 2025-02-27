@@ -28,4 +28,15 @@ class NewsArticle {
       isActive: json["isActive"] ?? false,
     );
   }
+  factory NewsArticle.fromJsonDetails(Map<String, dynamic> json) {
+    return NewsArticle(
+      id: json["id"] ?? "",
+      title: json["title"] ?? "No Title",
+      description: json["content"] ?? "No Description",
+      categoryTitle: json["categoryTitle"] ?? "Uncategorized",
+      thumbnailPictureId: json["thumbnailPictureId"] ?? "",
+      creationDate: json["creationDateUtc"] ?? "",
+      isActive: json["isActive"] ?? false,
+    );
+  }
 }

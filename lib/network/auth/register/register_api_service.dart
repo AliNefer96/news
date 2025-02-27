@@ -11,18 +11,18 @@ class RegisterApiService {
 
   Future<Map<String, dynamic>> registerUser(RegisterUserModel user) async {
   try {
-    print("Request Data: ${user.toJson()}"); // Debugging
+    print("Request Data: ${user.toJson()}"); 
 
     final response = await _dio.post(
       AppEndpoints.registerUrl,
       data: user.toJson(),
     );
 
-    print("Response Data: ${response.data}"); // Debugging
+    print("Response Data: ${response.data}"); 
 
     return {"success": true, "data": response.data};
   } on DioException catch (e) {
-    print("DioException: ${e.response?.data}"); // Debugging
+    print("DioException: ${e.response?.data}"); 
 
     if (e.response != null) {
       return {

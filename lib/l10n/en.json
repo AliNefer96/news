@@ -1,0 +1,19 @@
+{
+    "newsTitle": "NEWS",
+    "newsCategory": "Category",
+    "registerTitle": "Register",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number",
+    "email": "Email",
+    "password": "Password",
+    "birthdayLabel": "Birth Date (YYYY-MM-DD)",
+    "birthdayCard": "Send Birthday Card Automatically",
+    "loginTitle": "Login",
+    "english": "English",
+    "croatian": "Croatian",
+    "newsDetails": "News Details",
+    "alreadyHaveAcc": "Already have an account? Login",
+    "dontHaveAcc": "Not registered? Register here",
+    "welcome": "Welcome"
+ }
