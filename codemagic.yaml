@@ -13,7 +13,7 @@ workflows:
       - flutter build apk --release
       - name: Dekodiranje keystore-a
         script: |
-         echo $CM_KEYSTORE | base64 --decode > android/app/my-release-key.jks
+         echo $CM_KEYSTORE | base64 --decode > android/my-release-key.jks
       - name: Build Shorebird release
         script: |
           shorebird release android
