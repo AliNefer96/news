@@ -1,0 +1,45 @@
+name: Flutter Build APK
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.29.0'
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Decode keystore from GitHub Secrets
+      run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > my-release-key.jks
+
+    - name: Set up Java
+      run: sudo apt-get install openjdk-11-jdk
+
+    - name: Shorebird Release (Optional if using Shorebird)
+      run: |
+        curl --proto '=https' --tlsv1.2 https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh -sSf | bash
+        echo PATH="$HOME/.shorebird/bin:$PATH" >> $GITHUB_ENV
+        shorebird release android --flutter-version="3.29.0"
+
+    - name: Build APK
+      run: flutter build apk --release
+      env:
+        JAVA_HOME: /usr/lib/jvm/java-11-openjdk
+
+    - name: Upload release APK to GitHub
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-apk
+        path: build/app/outputs/flutter-apk/app-release.apk
