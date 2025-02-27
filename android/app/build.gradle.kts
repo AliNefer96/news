@@ -18,7 +18,7 @@ val keystoreProperties = Properties().apply {
 android {
     namespace = "com.example.news"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = "27.0.12077973"
+    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -42,9 +42,9 @@ android {
     signingConfigs {
         create("release") {
                 storeFile = file("../my-release-key.jks")
-                storePassword = System.getenv("CM_KEYSTORE_PASSWORD")
-                keyAlias = System.getenv("CM_KEY_ALIAS")
-                keyPassword = System.getenv("CM_KEY_PASSWORD")
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = "news"
+                keyPassword = System.getenv("KEY_PASSWORD")
             }
     }
     buildTypes {
